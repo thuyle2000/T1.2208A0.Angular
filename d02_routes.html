@@ -25,12 +25,21 @@
         <!-- main content -->
         <div ng-controller="mainCTR">
             <nav>
-                <a href="">Home</a> |
-                <a href="">List of Students</a> |
-                <a href="">Forum</a> |
-                <a href="">Contact us</a>
+                <a href="#/!">Home</a> |
+                <a href="#!student">List of Students</a> |
+                <a href="#!forum">Forum</a> |
+                <a href="#!contact">Contact us</a>
             </nav>
-            <div></div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- khoi hien thi cac trang muon link -->
+                    <div ng-view></div>
+                </div>
+                <div class="col-md-4">
+                    <img src="images/index_haloween2.PNG" alt="" style="width: 90%;">
+                </div>
+            </div>
 
         </div>
 
@@ -39,8 +48,43 @@
 
     <script>
         let app = angular.module("myAPP", ["ngRoute"]);
-        
+
+        app.config(function ($routeProvider) {
+            $routeProvider
+                .when("/", {
+                    // templateUrl: "d02_routes.html"
+                })
+                .when("/student", {
+                    templateUrl: "d02_routes_student.html"
+                })
+                .when("/forum", {
+                    templateUrl: "d02_routes_forum.html"
+                })
+                .when("/contact", {
+                    templateUrl: "d02_routes_contact.html"
+                });
+        });
+
         app.controller("mainCTR", function ($scope) {
+
+        });
+
+        app.controller("myLIST", function ($scope) {
+            $scope.today = new Date();
+            $scope.year = $scope.today.getFullYear();
+
+            //mang json, chua ds sinh vien
+            $scope.ds = [
+                { 'id': 'sv01', 'name': 'bui minh hai', 'yob': 1996 },
+                { 'id': 'sv02', 'name': 'le tan kha', 'yob': 2004 },
+                { 'id': 'sv03', 'name': 'danh vo tuan khanh', 'yob': 2003 },
+                { 'id': 'sv04', 'name': 'tran hao duy tu', 'yob': 2004 },
+                { 'id': 'sv05', 'name': 'le duy nien', 'yob': 2006 },
+                { 'id': 'sv06', 'name': 'nguyen quoc kiet', 'yob': 2004 },
+                { 'id': 'sv07', 'name': 'duong tuyet mai', 'yob': 2004 },
+                { 'id': 'sv08', 'name': 'pham thi my thuy', 'yob': 2004 },
+            ];
+
 
         });
 

@@ -1,0 +1,37 @@
+<h2>Student List</h2>
+<hr>
+
+<!-- main content -->
+<div ng-controller="myLIST">
+
+    <p>Today is {{today | date:'fullDate'}}</p>
+
+    <p>
+        <input type="text" name="sname" id="sname" placeholder="input student name" ng-model="sname">
+    </p>
+
+    <h4>List of Students</h4>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>year of birth</th>
+                <th>age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="sv in ds | filter:sname">
+                <td>{{$index+1}}</td>
+                <td>{{sv.id | lowercase}}</td>
+                <td>{{sv.name | uppercase}}</td>
+                <td>{{sv.yob}}</td>
+                <td>{{year - sv.yob}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
