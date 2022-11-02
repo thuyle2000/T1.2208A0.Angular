@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajs-intro</title>
+
+    <!-- link bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 1. nhung link angularjs framework -->
+    <script src="js/angular.min.js"></script>
+
+</head>
+<!-- 2. khai bao noi bat dau ung dung angularjs bang directive ng-app -->
+<body ng-app>
+    <div class="container">
+        <h2>AngularJS Introduction</h2>
+        <hr>
+        <p>Please enter your name here : 
+            <!-- 3. bien username cua angularjs luu du lieu duoc nhap tu o input txtName bang directive ng-model -->
+            <input type="text" name="txtName" id="txtName" ng-model="username">
+        </p>
+        <!-- 4. hien thi gia tri cua bien username bang cu phap bieu thuc {{}} -->
+        <p>Hello <b> <i> {{username}} </i></b>!</p>
+        <p>Welcome to AngularJS</p>
+    </div>
+</body>
+</html>
