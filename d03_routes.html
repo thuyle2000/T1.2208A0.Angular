@@ -49,11 +49,10 @@
 
     <script>
         let app = angular.module("myAPP", ["ngRoute"]);
-
         app.config(function ($routeProvider) {
             $routeProvider
                 .when("/", {
-                    
+
                 })
                 .when("/student", {
                     templateUrl: "d03_list_student.html"
@@ -62,31 +61,47 @@
                     templateUrl: "d03_add_student2.html"
                 })
                 .when("/contact", {
-                    
+
                 });
         });
+
+        app.run(function ($rootScope, $http) {
+            $rootScope.ds = [];
+
+            $http.get("student.json").then(function (r) {
+                $rootScope.ds = r.data.data_students;
+            }
+            );
+        });
+
+
 
         app.controller("mainCTR", function ($scope) {
 
         });
 
-        app.controller("myLIST", function ($scope) {
+        app.controller("myADD", function ($scope) {
+
+            $scope.addStudent = function(){
+                //tao ra 1 doi tuong json ten sv co cac thuoc tinh id,name,yob
+                let sv = {
+                    "id":$scope.ID,
+                    "name": $scope.name,
+                    "yob": $scope.yob
+                };
+
+                //dua doi tuong sv vo mang ds
+                $scope.ds.push(sv);
+
+                //xuat thong bao thanh cong
+                alert("Add New Student Succeed !")
+
+            }
+        });
+
+        app.controller("myLIST", function ($scope, $http) {
             $scope.today = new Date();
             $scope.year = $scope.today.getFullYear();
-
-            //mang json, chua ds sinh vien
-            $scope.ds = [
-                { 'id': 'sv01', 'name': 'bui minh hai', 'yob': 1996 },
-                { 'id': 'sv02', 'name': 'le tan kha', 'yob': 2004 },
-                { 'id': 'sv03', 'name': 'danh vo tuan khanh', 'yob': 2003 },
-                { 'id': 'sv04', 'name': 'tran hao duy tu', 'yob': 2004 },
-                { 'id': 'sv05', 'name': 'le duy nien', 'yob': 2006 },
-                { 'id': 'sv06', 'name': 'nguyen quoc kiet', 'yob': 2004 },
-                { 'id': 'sv07', 'name': 'duong tuyet mai', 'yob': 2004 },
-                { 'id': 'sv08', 'name': 'pham thi my thuy', 'yob': 2004 },
-            ];
-
-
         });
 
     </script>
