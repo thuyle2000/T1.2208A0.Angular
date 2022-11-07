@@ -52,7 +52,7 @@
         app.config(function ($routeProvider) {
             $routeProvider
                 .when("/", {
-
+                    templateUrl: "d03_list_student.html"
                 })
                 .when("/student", {
                     templateUrl: "d03_list_student.html"
@@ -75,17 +75,16 @@
         });
 
 
-
         app.controller("mainCTR", function ($scope) {
 
         });
 
         app.controller("myADD", function ($scope) {
 
-            $scope.addStudent = function(){
+            $scope.addStudent = function () {
                 //tao ra 1 doi tuong json ten sv co cac thuoc tinh id,name,yob
                 let sv = {
-                    "id":$scope.ID,
+                    "id": $scope.ID,
                     "name": $scope.name,
                     "yob": $scope.yob
                 };
@@ -102,6 +101,25 @@
         app.controller("myLIST", function ($scope, $http) {
             $scope.today = new Date();
             $scope.year = $scope.today.getFullYear();
+
+            $scope.remove = function (id) {
+
+                if (confirm("Are u sure ?")) {
+                    let index = -1;
+
+                    $scope.ds.forEach((sv, i) => {
+                        if (sv.id == id) {
+                            console.log("found !");
+                            index = i;
+                        }
+                    });
+
+                    if (index >= 0) {
+                        $scope.ds.splice(index, 1);
+                    }
+                }
+
+            }
         });
 
     </script>
