@@ -7,7 +7,8 @@
     <p>Today is {{today | date:'fullDate'}}</p>
 
     <p>
-        <input type="text" name="sname" id="sname" placeholder="input student name" ng-model="sname">
+        <!-- <input type="text" name="sname" id="sname" placeholder="input student name" ng-model="sname"> -->
+        <input type="text" name="sname" id="sname" placeholder="input student name" ng-model="sname.name">
     </p>
 
     <h4>List of Students</h4>
@@ -23,6 +24,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- <tr ng-repeat="sv in ds | filter:{name:sname}"> -->
             <tr ng-repeat="sv in ds | filter:sname">
                 <td>{{$index+1}}</td>
                 <td>{{sv.id | lowercase}}</td>
@@ -30,12 +32,12 @@
                 <td>{{sv.yob}}</td>
                 <td>{{year - sv.yob}}</td>
                 <td>
-                    <button type="button" class="btn btn-success" ng-click="remove(sv.id)" > delete </button>
+                    <button type="button" class="btn btn-success" ng-click="remove(sv.id)"> delete </button>
                 </td>
             </tr>
         </tbody>
     </table>
 
 
- 
+
 </div>
