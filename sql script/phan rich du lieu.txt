@@ -1,0 +1,32 @@
+Xây dựng hệ CSDL lưu trữ thóng tin các đơn hàng
+
+1/ Phân tích dữ liệu :
+hệ thống bao gồm các thực thể
+- sản phẩm
+- khách hàng
+- đơn hàng
+- chi tiết đơn hàng
+
+thuộc tính của các thực thể:
+- sản phẩm:
+	+ mã sp, tên sp, đơn giá, nhà sx
+	+ khóa chính : mã sp
+- khách hàng:
+	+ mã kh, tên kh, số dt, email, địa chỉ (phức: đường, quận)
+	+ khóa chính : mã kh
+
+- đơn hàng:
+	+ mã đh, ngày đặt hàng, khách hàng, tổng tiền, vat (dẫn xuất = 10% tổng tiền), phí ship, đc giao hàng
+	+ khóa chính: mã đh
+	+ khóa ngoại: khách hàng
+
+- chi tiết đơn hàng:
+	+ mã đh, mã sp, số lượng, đơn giá, thành tiền (dẫn xuất: đơn giá* số lượng)
+	+ khóa chính: mã đh + mã sp
+	+ khóa ngoại: mã đh, mã sp
+
+2/ Xác định quan hệ:
+- 1 khách hàng (có nhiều) đơn hàng
+- 1 đơn hàng (bao gồm nhiều) chi tiết mua hàng
+- 1 chi tiết mua hàng (mô tả 1) sản phẩm  
+  1 sản phẩm (được đặt mua) trong nhiều đơn hàng 
