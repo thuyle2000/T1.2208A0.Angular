@@ -21,6 +21,9 @@ select *,LEN(st_name),
 	SUBSTRING(st_name,LEN(st_name) - CHARINDEX(' ',REVERSE(st_name))+2, LEN(st_name))
 from tbStudent
 
+
+
+
 --tim cac sv sinh nam 2000-2003
 select * from tbStudent where YEAR(dob)>=2000 and YEAR(dob)<=2003
 
@@ -35,3 +38,29 @@ select * from tbStudent
 select * from tbStudent 
 	where leader_id IN ('s01','s07') OR st_id IN ('s01','s07')
 GO
+
+-- in ra ds sv 18 tuoi: ap dung cach khai bao bien
+declare @year18 int
+set @year18 = YEAR( GETDATE()) - 18
+
+select * from tbStudent where YEAR(dob) = @year18
+go
+
+-- in ds sv 18 tuoi, voi cot gioi tinh mang gia tri hoac 'nam' hoac 'nu'
+select * from tbStudent 
+	where DATEDIFF(yy, dob, GETDATE()) = 18
+
+
+select st_id [ma so], st_name [ho ten],
+	   case 
+			when gender = 1 then 'nam'
+			else 'nu' 
+	   end [gioi tinh],
+	   dob [sinh nhat]
+	from tbStudent 
+	where DATEDIFF(yy, dob, GETDATE()) = 18
+
+--in ra ds sinh vien co ngay sinh nhat trong thang hien tai
+select * from tbStudent 
+	where MONTH(dob) = MONTH(GETDATE())
+ 
