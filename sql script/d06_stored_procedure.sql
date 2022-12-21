@@ -25,3 +25,28 @@ go
 exec up_shoolGirl
 go
 
+-- xem ds cac mon hoc
+select * from tbModule
+go
+/* 
+	2. tao stored procedure de thuc hien 4 viec:
+		- xem danh sach cac mon hoc
+		- tang hoc phi moi mon hoc len 10%
+		- xem lai danh sach cac mon hoc
+		- in ra mon hoc co hoc phi cao nhat
+*/
+create proc up_module AS
+begin
+	--1/ xem danh sach cac mon hoc
+	select * from tbModule
+	--2/ tang hoc phi moi mon hoc len 10%
+	update tbModule set fee = fee*110/100
+	--3/ xem danh sach cac mon hoc sau khi tang hoc phi
+	select * from tbModule
+	--4/ in ra mon hoc co hoc phi cao nhat
+	select top 1 * from tbModule Order by fee desc
+end
+go
+--test case: goi store de tang hoc phi cac mon hoc
+exec up_module
+go
