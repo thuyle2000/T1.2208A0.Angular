@@ -123,3 +123,4 @@ go
 -- test chuc nang 'with schemabinding' trong dn view: thu xoa bang nhan vien : LOI !!!
 drop table tbEmployee
 go
+
