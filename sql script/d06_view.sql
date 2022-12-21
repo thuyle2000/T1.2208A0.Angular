@@ -22,3 +22,16 @@ go
 
 -- test view
 select * from vwShoolGirl_2
+go
+
+-- cach 2: tao view tu view vwShoolGirl
+create view vwShoolGirl_2x AS
+	select sv.st_id, sv.st_name, sv.dob, 
+		YEAR(GetDate())-YEAR(sv.dob) [age],
+		sv.leader_id, tn.st_name [leader_name]
+	from vwShoolGirl [sv] left join tbStudent [tn]
+						on sv.leader_id = tn.st_id
+go
+-- test view
+select * from vwShoolGirl_2x
+go
