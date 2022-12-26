@@ -82,8 +82,32 @@ begin
 end
 go
 
---test case 2: doi ten cua nv co ms 8-> 'Lyly'
+--test case 2: doi ten cua nv co ms 8-> 'Lyly' : Loi !
 select * from tbEmployee
 update tbEmployee set e_name='Lyly' where e_id=8
 select * from tbEmployee
 go
+
+/*
+4. viet trigger tren bang nhan vien: khong cho phep xoa nhan vien co ten la Duy
+	-> loai trigger: delete
+*/
+create trigger td_delete_employee on tbEmployee
+for delete as
+begin
+	select * from deleted where e_name like N'% duy'
+	if @@ROWCOUNT > 0
+	begin
+		rollback -- huy thao tac delete
+		print 'Ko duoc phep xoa nhan vien co ten la Duy'
+	end
+end
+go
+
+-- test case 1: xoa nhan vien co ten la Anh
+select * from tbEmployee
+delete from tbEmployee where e_name like '% anh' 
+
+-- test case 2: xoa nhan vien co ten la duy : Loi !!!
+select * from tbEmployee
+delete from tbEmployee where e_name like '% duy' 
