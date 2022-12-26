@@ -134,3 +134,25 @@ go
 -- test case: xoa sv co ma so s41
 select * from tbStudent
 delete from tbStudent where st_id like 's41'
+go
+
+-- xem dinh nghia cua trigger [td_delete_employee]
+sp_helptext td_delete_employee
+go
+
+
+-- tao synonym [dbo].[sinhvien], la ten khac cua bang [tbStudentModule]
+CREATE SYNONYM [dbo].[sinhvien] 
+FOR [db2208_A0].[dbo].[tbStudentModule]
+GO
+
+-- xem ds sinh vien
+select * from tbStudentModule
+select * from dbo.sinhvien
+
+-- vi du ve window over
+select * from tbStudentModule
+
+select student, module, 
+	AVG(mark) over (partition by student, module) [diem BQ]
+ from tbStudentModule
