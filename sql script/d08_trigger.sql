@@ -44,3 +44,46 @@ update tbStudentModule set module='M01'
 select * from tbStudentModule 
 	where student like 'S03' and module like 'M01'
 go
+
+
+/*
+2. viet trigger tren bang nhan vien: khong cho phep thay doi ma so nv
+	-> loai trigger: update
+*/
+create trigger tg_employee on tbEmployee
+after update as
+begin
+	if update(e_id)
+	begin
+		rollback -- huy thao tac update
+		print 'Ko duoc phep doi ma so nhan vien'
+	end
+end
+go
+
+--test case 1: doi luong cua nv co ms = 8, thanh 4300
+select * from tbEmployee
+update tbEmployee set salary=4300 where e_id=8
+select * from tbEmployee
+go
+
+/*
+3. sua lai trigger tren bang nv: khong cho phep thay doi ten nv
+	-> loai trigger: update
+*/
+alter trigger tg_employee on tbEmployee
+after update as
+begin
+	if update(e_name)
+	begin
+		rollback -- huy thao tac update
+		print 'Ko duoc phep doi ten nhan vien'
+	end
+end
+go
+
+--test case 2: doi ten cua nv co ms 8-> 'Lyly'
+select * from tbEmployee
+update tbEmployee set e_name='Lyly' where e_id=8
+select * from tbEmployee
+go
