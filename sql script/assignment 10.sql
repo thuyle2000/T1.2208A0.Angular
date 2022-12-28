@@ -138,6 +138,30 @@ go
 exec uspChangeStatus
 go
 
+/*
+8. Create a store procedure uspCountStatus to count and return the number of messages (output parameter) depending on the given status (input parameter)
+*/
+create proc uspCountStatus 
+@status varchar(10), @rows int OUTPUT
+as
+begin
+	select * from tbMessage where [Status] like @status 
+	set @rows = @@ROWCOUNT
+end
+go
+
+-- test case 1:
+declare @so_dong int
+exec uspCountStatus 'Pending',  @so_dong OUTPUT
+select @so_dong as 'so dong thong bao'
+go
+
+-- test case 2:
+declare @so_dong int
+exec uspCountStatus 'resolved',  @so_dong OUTPUT
+select @so_dong as 'so dong thong bao'
+go
+
 
 
 	
