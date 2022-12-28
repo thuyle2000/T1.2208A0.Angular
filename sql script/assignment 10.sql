@@ -90,3 +90,54 @@ insert tbMessage values
 ('C001', 'Please send all future bill to my residential address instead of my office address', '05-09-2014', 'Resolved'),
 ('C004' ,'Please send new monthly brochure ...', '08-11-2014', 'Pending')
 go
+
+/*
+4. 
+a. Create a clustered index IX_Name for CustName column on tbCustomer table.
+b. Create a composite index IX_CustMsg fot CustCode and MsgNo columns on tbMessage table
+*/
+create clustered index IX_Name on tbCustomer(CustName)
+create index IX_CustMsg on tbMessage (CustCode,MsgNo) 
+go
+
+/*
+5. Write a query to display the list of customers have no message sent yet.
+*/
+select * from tbCustomer 
+	where CustCode not in (select distinct CustCode from tbMessage)
+go
+
+/*
+6. Create a view vReport which displays messages sended after 1 – Sep – 2014 as following:
+		MsgNo MsgDetails DatePosted PostedBy Status
+		1002 Please send all ... 09/05/2014 RahulKhana Resolved
+		1003 Please send new... 11/08/2014 Sanjay Gupta Pending
+	Note: The definition of view must be hidden from users.
+*/
+create view vReport with encryption as 
+	select MsgNo, MsgDetails, MsgDate [Date posted], b.CustName [Posted by], Status 
+	from tbMessage a join tbCustomer b on a.CustCode = b.CustCode
+	where MsgDate >= '2014-09-01'
+go
+
+-- test view vReport
+select * from vReport
+go
+
+/*
+7. Create a store procedure uspChangeStatus to modify CustStatus column in Customer table from “invalid” to “valid” and display the number of records were changed.
+*/
+create proc uspChangeStatus as
+begin
+	update tbCustomer set CustStatus = 'valid' where CustStatus='invalid'
+	select @@ROWCOUNT [so dong da thay doi trang thai]
+end
+go
+
+-- test procedure
+exec uspChangeStatus
+go
+
+
+
+	
