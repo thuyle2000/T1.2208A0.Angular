@@ -53,6 +53,40 @@ Status VARCHAR(10) Status of message either Pending or Resolved
 create table tbMessage (
 	MsgNo int identity(1000,1) primary key NONCLUSTERED,
 	CustCode VARCHAR(5) FOREIGN KEY References tbCustomer(CustCode),
-	MsgDetails DATE not null DEFAULT GETDATE(),
-	[Status] VARCHAR(10) not null CHECK ([status] IN ('Pending', 'Resolved') )
+	MsgDetails VARCHAR(300) not null,
+	MsgDate DATE not null DEFAULT GETDATE(),
+	[Status] VARCHAR(10) not null CHECK ([status] IN ('Pending','Resolved') )
 )
+GO
+
+-- insert data 
+/*
+tbCustomer
+CustCode CustName CustAddres CustPhone CustEmail CustStatus
+C001 Rahul Khana 7th Cross Road 298345878 khannar@hotmail.com Valid
+C002 Anil Thakkar Line Ali Road 657654323 Thakkar2002@yahoo.com Valid
+C004 Sanjay Gupta Link Road 367654323 SanjayG@indiatimes.com Invalid
+C005 Sagar Vyas Link Road 376543255 Sagarvyas@india.com Valid
+*/
+insert tbCustomer values
+('C001', 'Rahul Khana', '7th Cross Road', '298345878', 'khannar@hotmail.com', 'Valid'),
+('C002', 'Anil Thakkar', 'Line Ali Road', '657654323', 'Thakkar2002@yahoo.com', 'Valid'),
+('C004', 'Sanjay Gupta', 'Link Road', '367654323', 'SanjayG@indiatimes.com', 'Invalid'),
+('C005', 'Sagar Vyas', 'Link Road', '376543255', 'Sagarvyas@india.com', 'Valid')
+go
+
+/*
+tbMessage
+MsgNo CustCode MsgDetails MsgDate Status
+1000 C001 Voice mail always give ACCESS DENIED message 31-Aug-2014 Pending
+1001 C005 Voice mail activation always give NO ACCESS message 1-Sep-2014 Pending
+1002 C001 Please send all future bill to my residential address instead of my office address 5-Sep-2014 Resolved
+1003 C004 Please send new monthly brochure ... 8-Nov-2014 Pending
+*/
+set dateformat dmy
+insert tbMessage values
+('C001', 'Voice mail always give ACCESS DENIED message', '31-08-2014', 'Pending'),
+('C005', 'Voice mail activation always give NO ACCESS message', '01-09-2014', 'Pending'),
+('C001', 'Please send all future bill to my residential address instead of my office address', '05-09-2014', 'Resolved'),
+('C004' ,'Please send new monthly brochure ...', '08-11-2014', 'Pending')
+go
