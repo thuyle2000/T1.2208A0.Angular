@@ -162,6 +162,29 @@ exec uspCountStatus 'resolved',  @so_dong OUTPUT
 select @so_dong as 'so dong thong bao'
 go
 
+/*
+9. Create a trigger tgCustomerInvalid for table tbCustomer which will perform rollback transaction when a new record is inserted which customer has status is invalid and display appropriate messages.
+*/
+create trigger tgCustomerInvalid on tbCustomer
+for insert as
+begin
+	if (select CustStatus from inserted) = 'invalid'
+	begin
+		rollback 
+		print 'Khong the them khach hang voi trang thai [invalid]'
+	end
+end
+go
 
+-- test case 1: that bai
+insert tbCustomer values
+('C010', 'Rahul Khana', '7th Cross Road', '298345878', 'khannar@hotmail.com', 'invalid')
+go
+
+
+-- test case 2: thanh cong
+insert tbCustomer values
+('C010', 'Rahul Khana', '7th Cross Road', '298345878', 'khannar@hotmail.com', 'valid')
+go
 
 	
